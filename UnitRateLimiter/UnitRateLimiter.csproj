@@ -9,4 +9,8 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include="Metadatas\IUnitRateLimiterMetadata.cs" />
+	</ItemGroup>
+
 </Project>

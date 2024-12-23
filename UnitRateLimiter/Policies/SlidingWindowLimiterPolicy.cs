@@ -1,21 +1,12 @@
 ﻿using System.Threading.RateLimiting;
-using UnitLimiter.Metadatas;
+using UnitRateLimiter.Metadatas;
 
-namespace UnitLimiter.Policies
+namespace UnitRateLimiter.Policies
 {
-    /// <summary>
-    /// SlidingWindowLimiter策略
-    /// </summary> 
-    sealed class SlidingWindowLimiterPolicy : UnitLimiterPolicyBase
+    sealed class SlidingWindowLimiterPolicy : UnitRateLimiterPolicy
     {
-        /// <summary>
-        /// 策略名
-        /// </summary>
         public const string PolicyName = "UnitLimiter.SlidingWindowLimiterPolicy";
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
         protected override RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key)
         {
             var metadata = key.Endpoint.Metadata.GetMetadata<ISlidingWindowLimiterMetadata>();

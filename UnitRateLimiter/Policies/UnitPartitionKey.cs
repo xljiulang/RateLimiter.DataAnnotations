@@ -2,17 +2,17 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace UnitLimiter.Policies
+namespace UnitRateLimiter.Policies
 {
     /// <summary>
-    /// 基于Endpoint的限流
+    /// 表示一个单元分区键
     /// </summary>
     readonly struct UnitPartitionKey : IEquatable<UnitPartitionKey>
     {
         /// <summary>
         /// 获取None实例
         /// </summary>
-        public static readonly UnitPartitionKey None = new(new(null, new EndpointMetadataCollection(), "None"), null);
+        public static readonly UnitPartitionKey None = new(new(null, new EndpointMetadataCollection(), "None"), string.Empty);
 
         /// <summary>
         /// 获取终结点
@@ -20,45 +20,45 @@ namespace UnitLimiter.Policies
         public Endpoint Endpoint { get; }
 
         /// <summary>
-        /// 限制的单元
+        /// 获取单元
         /// </summary>
-        public string? Unit { get; }
+        public string Unit { get; }
 
         /// <summary>
-        /// 基于Endpoint的限流
+        /// 初始化 <see cref="UnitPartitionKey"/> 结构的新实例
         /// </summary>
         /// <param name="endpoint">终结点</param>
-        /// <param name="unit">用户id</param>
-        public UnitPartitionKey(Endpoint endpoint, string? unit)
+        /// <param name="unit">单元</param>
+        public UnitPartitionKey(Endpoint endpoint, string unit)
         {
             Endpoint = endpoint;
             Unit = unit;
         }
 
         /// <summary>
-        /// 是否相等
+        /// 确定当前对象是否等于同一类型的另一个对象
         /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
+        /// <param name="other">要与当前对象进行比较的对象</param>
+        /// <returns>如果当前对象等于 <paramref name="other"/> 参数，则为 true；否则为 false</returns>
         public readonly bool Equals(UnitPartitionKey other)
         {
             return Endpoint == other.Endpoint && Unit == other.Unit;
         }
 
         /// <summary>
-        /// 是否相等
+        /// 确定当前对象是否等于另一个对象
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">要与当前对象进行比较的对象</param>
+        /// <returns>如果当前对象等于 <paramref name="obj"/> 参数，则为 true；否则为 false</returns>
         public override readonly bool Equals([NotNullWhen(true)] object? obj)
         {
             return obj is UnitPartitionKey other && Equals(other);
         }
 
         /// <summary>
-        /// 获取哈希值
+        /// 用作默认哈希函数
         /// </summary>
-        /// <returns></returns>
+        /// <returns>当前对象的哈希代码</returns>
         public override readonly int GetHashCode()
         {
             var hashCode = new HashCode();
@@ -68,22 +68,22 @@ namespace UnitLimiter.Policies
         }
 
         /// <summary>
-        /// 是否相等
+        /// 确定两个 <see cref="UnitPartitionKey"/> 实例是否相等
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">左侧实例</param>
+        /// <param name="right">右侧实例</param>
+        /// <returns>如果两个实例相等，则为 true；否则为 false</returns>
         public static bool operator ==(UnitPartitionKey left, UnitPartitionKey right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// 是否不等
+        /// 确定两个 <see cref="UnitPartitionKey"/> 实例是否不相等
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">左侧实例</param>
+        /// <param name="right">右侧实例</param>
+        /// <returns>如果两个实例不相等，则为 true；否则为 false</returns>
         public static bool operator !=(UnitPartitionKey left, UnitPartitionKey right)
         {
             return !(left == right);

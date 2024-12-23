@@ -4,32 +4,22 @@ using System;
 using System.Threading;
 using System.Threading.RateLimiting;
 using System.Threading.Tasks;
-using UnitLimiter.Middlewares;
+using UnitRateLimiter.Middlewares;
 
-namespace UnitLimiter.Policies
+namespace UnitRateLimiter.Policies
 {
-    /// <summary>
-    /// Endpoint限流策略基类
-    /// </summary>
-    abstract partial class UnitLimiterPolicyBase : IRateLimiterPolicy<UnitPartitionKey>
+    abstract partial class UnitRateLimiterPolicy : IRateLimiterPolicy<UnitPartitionKey>
     {
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
+
         public Func<OnRejectedContext, CancellationToken, ValueTask>? OnRejected => RejectedAsync;
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        private ValueTask RejectedAsync(OnRejectedContext context, CancellationToken cancellationToken)
+
+        protected virtual ValueTask RejectedAsync(OnRejectedContext context, CancellationToken cancellationToken)
         {
             context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
             return ValueTask.CompletedTask;
         }
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
         public RateLimitPartition<UnitPartitionKey> GetPartition(HttpContext httpContext)
         {
             var endpoint = httpContext.GetEndpoint();
@@ -38,15 +28,20 @@ namespace UnitLimiter.Policies
                 return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
             }
 
-            var unitFeature = httpContext.Features.Get<ILimiterUnitFeature>();
-            return GetPartition(new UnitPartitionKey(endpoint, unitFeature?.Unit));
+            var unitFeature = httpContext.Features.Get<IUnitFeature>();
+            if (unitFeature == null)
+            {
+                return GetPartition(new UnitPartitionKey(endpoint, string.Empty));
+            }
+
+            if (unitFeature.Unit == null)
+            {
+                return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
+            }
+
+            return GetPartition(new UnitPartitionKey(endpoint, unitFeature.Unit));
         }
 
-        /// <summary>
-        /// 获取RateLimitPartition
-        /// </summary>
-        /// <param name="key"></param> 
-        /// <returns></returns>
         protected abstract RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key);
     }
 }

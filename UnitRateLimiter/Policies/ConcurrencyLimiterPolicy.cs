@@ -1,21 +1,12 @@
 ﻿using System.Threading.RateLimiting;
-using UnitLimiter.Metadatas;
+using UnitRateLimiter.Metadatas;
 
-namespace UnitLimiter.Policies
+namespace UnitRateLimiter.Policies
 {
-    /// <summary>
-    /// ConcurrencyLimiter策略
-    /// </summary> 
-    sealed class ConcurrencyLimiterPolicy : UnitLimiterPolicyBase
-    {
-        /// <summary>
-        /// 取策略名
-        /// </summary>
+    sealed class ConcurrencyLimiterPolicy : UnitRateLimiterPolicy
+    {       
         public const string PolicyName = "UnitLimiter.ConcurrencyLimiterPolicy";
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary> 
         protected override RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key)
         {
             var metadata = key.Endpoint.Metadata.GetMetadata<IConcurrencyLimiterMetadata>();
