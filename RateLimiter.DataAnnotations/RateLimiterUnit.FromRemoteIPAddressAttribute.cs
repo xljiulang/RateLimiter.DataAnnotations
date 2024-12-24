@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RateLimiter.DataAnnotations.Metadatas;
 using System;
 using System.Threading.Tasks;
-using UnitRateLimiter.Metadatas;
 
-namespace UnitRateLimiter.Routing
+namespace RateLimiter.DataAnnotations
 {
     public static partial class RateLimiterUnit
     {
@@ -11,7 +11,7 @@ namespace UnitRateLimiter.Routing
         /// 指定限流单元单位来源是远程IP地址的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class FromRemoteIPAddressAttribute : Attribute, IUnitRateLimiterMetadata
+        public sealed class FromRemoteIPAddressAttribute : Attribute, IRateLimiterUnitMetadata
         {
             public ValueTask<string?> GetUnitAsync(HttpContext context)
             {

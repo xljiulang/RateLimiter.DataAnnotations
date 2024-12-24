@@ -1,8 +1,8 @@
-﻿using System;
+﻿using RateLimiter.DataAnnotations.Metadatas;
+using System;
 using System.Threading.RateLimiting;
-using UnitRateLimiter.Metadatas;
 
-namespace UnitRateLimiter.Routing
+namespace RateLimiter.DataAnnotations
 {
     public static partial class RateLimiterPolicy
     {
@@ -10,7 +10,7 @@ namespace UnitRateLimiter.Routing
         /// 定义滑动窗口限流策略的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class SlidingWindowLimiterAttribute : Attribute, ISlidingWindowLimiterMetadata
+        public sealed class SlidingWindowLimiterAttribute : Attribute, ISlidingWindowLimiterPolicyMetadata
         {
             /// <summary>
             /// 获取滑动窗口限流器的许可限制。
@@ -60,7 +60,7 @@ namespace UnitRateLimiter.Routing
             /// </summary>
             /// <param name="unit">用于获取限流器选项的单位。可以为 null。</param>
             /// <returns>滑动窗口限流器的选项。</returns>
-            SlidingWindowRateLimiterOptions ISlidingWindowLimiterMetadata.GetLimiterOptions(string? unit)
+            SlidingWindowRateLimiterOptions ISlidingWindowLimiterPolicyMetadata.GetLimiterOptions(string? unit)
             {
                 return new SlidingWindowRateLimiterOptions
                 {

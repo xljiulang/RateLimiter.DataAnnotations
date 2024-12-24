@@ -1,4 +1,4 @@
-﻿namespace UnitRateLimiter.Middlewares
+﻿namespace RateLimiter.DataAnnotations.Middlewares
 {
     interface IUnitFeature
     {

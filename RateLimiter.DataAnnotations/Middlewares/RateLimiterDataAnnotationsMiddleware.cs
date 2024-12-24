@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RateLimiter.DataAnnotations.Metadatas;
 using System.Threading.Tasks;
-using UnitRateLimiter.Metadatas;
 
-namespace UnitRateLimiter.Middlewares
+namespace RateLimiter.DataAnnotations.Middlewares
 {
-    sealed class UnitRateLimiterMiddleware : IMiddleware
+    sealed class RateLimiterDataAnnotationsMiddleware : IMiddleware
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var unitFeature = context.Features.Get<IUnitFeature>();
             if (unitFeature == null)
             {
-                var metadata = context.GetEndpoint()?.Metadata.GetMetadata<IUnitRateLimiterMetadata>();
+                var metadata = context.GetEndpoint()?.Metadata.GetMetadata<IRateLimiterUnitMetadata>();
                 if (metadata != null)
                 {
                     var unit = await metadata.GetUnitAsync(context);
@@ -20,6 +20,12 @@ namespace UnitRateLimiter.Middlewares
                 }
             }
             await next(context);
+        }
+
+
+        private sealed class UnitFeature(string? unit) : IUnitFeature
+        {
+            public string? Unit { get; } = unit;
         }
     }
 }

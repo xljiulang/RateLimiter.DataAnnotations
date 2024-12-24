@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="Metadatas\IUnitRateLimiterMetadata.cs" />
+	  <None Include="Metadatas\IRateLimiterUnitMetadata.cs" />
 	</ItemGroup>
 
 </Project>

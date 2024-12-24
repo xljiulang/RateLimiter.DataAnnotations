@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace UnitRateLimiter.Policies
+namespace RateLimiter.DataAnnotations.Policies
 {
     /// <summary>
     /// 表示一个单元分区键

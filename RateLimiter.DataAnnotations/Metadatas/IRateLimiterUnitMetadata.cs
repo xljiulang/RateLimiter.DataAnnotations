@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace UnitRateLimiter.Metadatas
+namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 提供与单位速率限制相关的元数据的接口。
     /// </summary>
-    public interface IUnitRateLimiterMetadata
+    public interface IRateLimiterUnitMetadata
     {
         /// <summary>
         /// 根据给定的 HTTP 上下文异步检索用于速率限制的单位标识符。

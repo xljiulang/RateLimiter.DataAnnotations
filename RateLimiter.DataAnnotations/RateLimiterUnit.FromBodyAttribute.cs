@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RateLimiter.DataAnnotations.Metadatas;
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using UnitRateLimiter.Metadatas;
 
-namespace UnitRateLimiter.Routing
+namespace RateLimiter.DataAnnotations
 {
     public static partial class RateLimiterUnit
     {
@@ -14,7 +14,7 @@ namespace UnitRateLimiter.Routing
         /// 指定限流单元单位来源是请求体json的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class FromBodyAttribute : Attribute, IUnitRateLimiterMetadata
+        public sealed class FromBodyAttribute : Attribute, IRateLimiterUnitMetadata
         {
             /// <summary>
             /// 获取单元的名称。

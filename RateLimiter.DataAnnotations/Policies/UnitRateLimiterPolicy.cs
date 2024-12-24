@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
+using RateLimiter.DataAnnotations.Middlewares;
 using System;
 using System.Threading;
 using System.Threading.RateLimiting;
 using System.Threading.Tasks;
-using UnitRateLimiter.Middlewares;
 
-namespace UnitRateLimiter.Policies
+namespace RateLimiter.DataAnnotations.Policies
 {
     abstract partial class UnitRateLimiterPolicy : IRateLimiterPolicy<UnitPartitionKey>
     {

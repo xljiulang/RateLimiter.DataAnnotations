@@ -1,5 +1,3 @@
-using UnitRateLimiter;
-
 namespace WebApp
 {
     public class Program
@@ -9,7 +7,7 @@ namespace WebApp
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddRateLimiter(o => o.AddUnitRateLimiterPolicies());
+            builder.Services.AddRateLimiter(o => o.AddRateLimiterDataAnnotations());
 
             var app = builder.Build();
  
@@ -18,9 +16,9 @@ namespace WebApp
             // app.UseAuthentication();
             // app.UseAuthorization();
 
-            app.UseUnitRateLimiter();
+            app.UseRateLimiterDataAnnotations();
             app.UseRateLimiter();
-            app.MapControllers().AddUnitRateLimiterPolicyConventions();
+            app.MapControllers().AddRateLimiterDataAnnotations();
 
             app.Run();
         }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RateLimiter.DataAnnotations;
 using System.Security.Claims;
-using UnitRateLimiter.Routing;
 
 namespace WebApp.Controllers
 {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RateLimiter.DataAnnotations.Metadatas;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using UnitRateLimiter.Metadatas;
 
-namespace UnitRateLimiter.Routing
+namespace RateLimiter.DataAnnotations
 {
     public static partial class RateLimiterUnit
     {
@@ -12,7 +12,7 @@ namespace UnitRateLimiter.Routing
         /// 指定限流单元单位来源是<see cref="ClaimsPrincipal"/>类型的用户的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class FromUserAttribute : Attribute, IUnitRateLimiterMetadata
+        public sealed class FromUserAttribute : Attribute, IRateLimiterUnitMetadata
         {
             /// <summary>
             /// 获取单元的名称。

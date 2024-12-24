@@ -1,11 +1,11 @@
 ﻿using System.Threading.RateLimiting;
 
-namespace UnitRateLimiter.Metadatas
+namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 与滑动窗口限流器相关的元数据接口。
     /// </summary>
-    public interface ISlidingWindowLimiterMetadata
+    public interface ISlidingWindowLimiterPolicyMetadata : IRateLimiterPolicyMetadata
     {
         /// <summary>
         /// 根据指定的单位获取滑动窗口限流器的选项。

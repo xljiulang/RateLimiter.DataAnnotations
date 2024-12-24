@@ -1,11 +1,12 @@
-﻿using System.Threading.RateLimiting;
+﻿using RateLimiter.DataAnnotations.Policies;
+using System.Threading.RateLimiting;
 
-namespace UnitRateLimiter.Metadatas
+namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 定义并发限制器元数据的接口。
     /// </summary>
-    public interface IConcurrencyLimiterMetadata
+    public interface IConcurrencyLimiterPolicyMetadata : IRateLimiterPolicyMetadata
     {
         /// <summary>
         /// 获取指定单元的并发限制器选项。

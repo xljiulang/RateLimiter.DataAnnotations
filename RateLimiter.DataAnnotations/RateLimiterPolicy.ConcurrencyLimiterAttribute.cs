@@ -1,8 +1,8 @@
-﻿using System;
+﻿using RateLimiter.DataAnnotations.Metadatas;
+using System;
 using System.Threading.RateLimiting;
-using UnitRateLimiter.Metadatas;
 
-namespace UnitRateLimiter.Routing
+namespace RateLimiter.DataAnnotations
 {
     public static partial class RateLimiterPolicy
     {
@@ -10,7 +10,7 @@ namespace UnitRateLimiter.Routing
         /// 表示一个并发限制策略的属性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class ConcurrencyLimiterAttribute : Attribute, IConcurrencyLimiterMetadata
+        public sealed class ConcurrencyLimiterAttribute : Attribute, IConcurrencyLimiterPolicyMetadata
         {
             /// <summary>
             /// 获取并发数。
@@ -37,7 +37,7 @@ namespace UnitRateLimiter.Routing
             }
 
 
-            ConcurrencyLimiterOptions IConcurrencyLimiterMetadata.GetLimiterOptions(string? unit)
+            ConcurrencyLimiterOptions IConcurrencyLimiterPolicyMetadata.GetLimiterOptions(string? unit)
             {
                 return new ConcurrencyLimiterOptions
                 {
