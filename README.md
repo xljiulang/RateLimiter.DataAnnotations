@@ -3,7 +3,7 @@
 
 ## 如何使用
 ### 服务注册和使用中间件
-```
+```c#
 public static void Main(string[] args)
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +39,7 @@ public static void Main(string[] args)
 ```
 
 ### 为Action指定特性
-```
+```c#
 [ApiController]
 [Route("/api/[controller]")]
 public class UsersController : ControllerBase
