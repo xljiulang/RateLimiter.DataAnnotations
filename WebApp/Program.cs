@@ -1,3 +1,5 @@
+using RateLimiter.DataAnnotations.Features;
+
 namespace WebApp
 {
     public class Program
@@ -10,6 +12,8 @@ namespace WebApp
             builder.Services.AddRateLimiterDataAnnotations();
             builder.Services.AddRateLimiter(x => x.OnRejected = (context, cancellationToken) =>
             {
+                var unit = context.HttpContext.Features.Get<IUnitFeature>()?.Unit;
+                context.HttpContext.Response.Headers.TryAdd("X-RateLimit-Unit", unit);
                 context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
                 return ValueTask.CompletedTask;
             });

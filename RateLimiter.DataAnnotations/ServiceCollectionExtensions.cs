@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using RateLimiter.DataAnnotations;
+using RateLimiter.DataAnnotations.Features;
 using RateLimiter.DataAnnotations.Metadatas;
-using RateLimiter.DataAnnotations.Middlewares;
 using System.Threading.RateLimiting;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -22,7 +21,6 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var policyName = nameof(IRateLimiterPolicyMetadata);
             services.AddRateLimiter(o => o.AddPolicy(policyName, GetHttpContextPartition));
-            services.TryAddSingleton<RateLimiterDataAnnotationsMiddleware>();
             return services;
         }
 

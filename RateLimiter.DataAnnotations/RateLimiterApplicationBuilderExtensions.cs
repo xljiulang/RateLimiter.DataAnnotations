@@ -1,4 +1,7 @@
-﻿using RateLimiter.DataAnnotations.Middlewares;
+﻿using Microsoft.AspNetCore.Http;
+using RateLimiter.DataAnnotations.Features;
+using RateLimiter.DataAnnotations.Metadatas;
+using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -8,13 +11,36 @@ namespace Microsoft.AspNetCore.Builder
     public static class RateLimiterApplicationBuilderExtensions
     {
         /// <summary>
-        /// 将 <see cref="RateLimiterDataAnnotationsMiddleware"/> 添加到应用程序的请求管道中。
+        /// 使用RateLimiterDataAnnotations的中间件
         /// </summary>
-        /// <param name="app">应用程序构建器。</param>
-        /// <returns>更新后的应用程序构建器。</returns>
+        /// <param name="app"></param>
+        /// <returns></returns>
         public static IApplicationBuilder UseRateLimiterDataAnnotations(this IApplicationBuilder app)
         {
-            return app.UseMiddleware<RateLimiterDataAnnotationsMiddleware>();
+            return app.Use(next => context => InvokeAsync(context, next));
+        }
+
+        private static async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        {
+            var unitFeature = context.Features.Get<IUnitFeature>();
+            if (unitFeature == null)
+            {
+                var unitMetadata = context.GetEndpoint()?.Metadata.GetMetadata<IRateLimiterUnitMetadata>();
+                if (unitMetadata != null)
+                {
+                    var unit = await unitMetadata.GetUnitAsync(context);
+                    unitFeature = new UnitFeature(unit);
+                    context.Features.Set(unitFeature);
+                }
+            }
+
+            await next(context);
+        }
+
+
+        private sealed class UnitFeature(string? unit) : IUnitFeature
+        {
+            public string? Unit { get; } = unit;
         }
     }
 }
