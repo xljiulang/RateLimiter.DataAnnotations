@@ -8,7 +8,7 @@ namespace Microsoft.AspNetCore.Builder
     /// <summary>
     /// 提供扩展方法以便在 <see cref="IApplicationBuilder"/> 中使用速率限制中间件。
     /// </summary>
-    public static class RateLimiterApplicationBuilderExtensions
+    public static class ApplicationBuilderExtensions
     {
         /// <summary>
         /// 使用RateLimiterDataAnnotations的中间件
