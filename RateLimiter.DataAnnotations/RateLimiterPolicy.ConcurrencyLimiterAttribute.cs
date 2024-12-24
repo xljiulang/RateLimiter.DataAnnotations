@@ -36,8 +36,7 @@ namespace RateLimiter.DataAnnotations
                 PermitLimit = permitLimit;
             }
 
-
-            ConcurrencyLimiterOptions IConcurrencyLimiterPolicyMetadata.GetLimiterOptions(string? unit)
+            public ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new ConcurrencyLimiterOptions
                 {

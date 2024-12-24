@@ -9,14 +9,14 @@ namespace RateLimiter.DataAnnotations.Metadatas
     {
         RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
         {
-            return RateLimitPartition.GetTokenBucketLimiter(key, k => GetLimiterOptions(k.Unit));
+            return RateLimitPartition.GetTokenBucketLimiter(key, GetLimiterOptions);
         }
 
         /// <summary>
         /// 获取限流器选项。
         /// </summary>
-        /// <param name="unit">单位，可以为空。</param>
+        /// <param name="key">单元分区键。</param>
         /// <returns>返回 <see cref="TokenBucketRateLimiterOptions"/> 对象。</returns>
-        TokenBucketRateLimiterOptions GetLimiterOptions(string? unit);
+        TokenBucketRateLimiterOptions GetLimiterOptions(UnitPartitionKey key);
     }
 }

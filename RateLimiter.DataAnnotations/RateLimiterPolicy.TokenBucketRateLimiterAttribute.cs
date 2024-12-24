@@ -45,12 +45,8 @@ namespace RateLimiter.DataAnnotations
             /// </summary>
             public int QueueLimit { get; set; }
 
-            /// <summary>
-            /// 获取限流器选项。
-            /// </summary>
-            /// <param name="unit">单位，可以为空。</param>
-            /// <returns>返回 <see cref="TokenBucketRateLimiterOptions"/> 对象。</returns>
-            public TokenBucketRateLimiterOptions GetLimiterOptions(string? unit)
+
+            public TokenBucketRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new TokenBucketRateLimiterOptions
                 {

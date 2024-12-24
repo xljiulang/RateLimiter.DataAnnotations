@@ -55,12 +55,8 @@ namespace RateLimiter.DataAnnotations
                 SegmentsPerWindow = segmentsPerWindow;
             }
 
-            /// <summary>
-            /// 获取滑动窗口限流器的选项。
-            /// </summary>
-            /// <param name="unit">用于获取限流器选项的单位。可以为 null。</param>
-            /// <returns>滑动窗口限流器的选项。</returns>
-            SlidingWindowRateLimiterOptions ISlidingWindowLimiterPolicyMetadata.GetLimiterOptions(string? unit)
+
+            public SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new SlidingWindowRateLimiterOptions
                 {

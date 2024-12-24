@@ -9,14 +9,15 @@ namespace RateLimiter.DataAnnotations.Metadatas
     {
         RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
         {
-            return RateLimitPartition.GetSlidingWindowLimiter(key, k => GetLimiterOptions(k.Unit));
+            return RateLimitPartition.GetSlidingWindowLimiter(key, GetLimiterOptions);
         }
+
 
         /// <summary>
         /// 根据指定的单位获取滑动窗口限流器的选项。
         /// </summary>
-        /// <param name="unit">要获取限流器选项的单位。可以为 null。</param>
+        /// <param name="key">单元分区键。</param>
         /// <returns>滑动窗口限流器的选项。</returns>
-        SlidingWindowRateLimiterOptions GetLimiterOptions(string? unit);
+        SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key);
     }
 }

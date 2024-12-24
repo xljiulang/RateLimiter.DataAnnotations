@@ -9,14 +9,14 @@ namespace RateLimiter.DataAnnotations.Metadatas
     {
         RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
         {
-            return RateLimitPartition.GetConcurrencyLimiter(key, k => GetLimiterOptions(k.Unit));
+            return RateLimitPartition.GetConcurrencyLimiter(key, GetLimiterOptions);
         }
 
         /// <summary>
         /// 获取指定单元的并发限制器选项。
         /// </summary>
-        /// <param name="unit">要获取限制器选项的单元。</param>
+        /// <param name="key">单元分区键。</param>
         /// <returns>指定单元的并发限制器选项。</returns>
-        ConcurrencyLimiterOptions GetLimiterOptions(string? unit);
+        ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key);
     }
 }
