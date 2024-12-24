@@ -1,6 +1,6 @@
 using RateLimiter.DataAnnotations.Features;
 
-namespace WebApp
+namespace Sample
 {
     public class Program
     {

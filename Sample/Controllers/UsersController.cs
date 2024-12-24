@@ -2,7 +2,7 @@
 using RateLimiter.DataAnnotations;
 using System.Security.Claims;
 
-namespace WebApp.Controllers
+namespace Sample.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]

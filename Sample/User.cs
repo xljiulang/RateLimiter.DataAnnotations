@@ -1,4 +1,4 @@
-﻿namespace WebApp
+﻿namespace Sample
 {
     public class User
     {
