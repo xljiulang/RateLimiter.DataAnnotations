@@ -9,24 +9,24 @@ namespace WebApp.Controllers
     public class UsersController : ControllerBase
     {
         [HttpGet("{id}")]
-        [SlidingWindowLimiterPolicy(permitLimit: 10, windowSeconds: 60, segmentsPerWindow: 10)]
-        [UnitRateLimiter(UnitSource.Route, unitName: "id")]
+        [RateLimiterUnit.FromRoute(unitName: "id")]
+        [RateLimiterPolicy.SlidingWindowLimiter(permitLimit: 8, windowSeconds: 60, segmentsPerWindow: 10)]
         public User Get(string id)
         {
             return new User { Id = id };
         }
 
         [HttpPost]
-        [SlidingWindowLimiterPolicy(permitLimit: 10, windowSeconds: 60, segmentsPerWindow: 10)]
-        [UnitRateLimiter(UnitSource.Body, unitName: "id")]
+        [RateLimiterUnit.FromBody(unitName: "id")]
+        [RateLimiterPolicy.SlidingWindowLimiter(permitLimit: 9, windowSeconds: 60, segmentsPerWindow: 10)]
         public User Post(User user)
         {
             return user;
         }
 
         [HttpDelete("{id}")]
-        [SlidingWindowLimiterPolicy(permitLimit: 10, windowSeconds: 60, segmentsPerWindow: 10)]
-        [UnitRateLimiter(UnitSource.User, unitName: ClaimTypes.NameIdentifier)]
+        [RateLimiterUnit.FromUser(unitName: ClaimTypes.NameIdentifier)]
+        [RateLimiterPolicy.SlidingWindowLimiter(permitLimit: 10, windowSeconds: 60, segmentsPerWindow: 10)]
         public bool Delete(string id)
         {
             return true;
