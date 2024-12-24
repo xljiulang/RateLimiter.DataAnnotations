@@ -21,6 +21,7 @@ namespace Microsoft.AspNetCore.Builder
             options.AddPolicy<UnitPartitionKey, ConcurrencyLimiterPolicy>(ConcurrencyLimiterPolicy.PolicyName);
             options.AddPolicy<UnitPartitionKey, FixedWindowLimiterPolicy>(FixedWindowLimiterPolicy.PolicyName);
             options.AddPolicy<UnitPartitionKey, SlidingWindowLimiterPolicy>(SlidingWindowLimiterPolicy.PolicyName);
+            options.AddPolicy<UnitPartitionKey, TokenBucketRateLimiterPolicy>(TokenBucketRateLimiterPolicy.PolicyName);
             return options;
         }
 
@@ -65,6 +66,7 @@ namespace Microsoft.AspNetCore.Builder
                 IConcurrencyLimiterPolicyMetadata => ConcurrencyLimiterPolicy.PolicyName,
                 IFixedWindowLimiterPolicyMetadata => FixedWindowLimiterPolicy.PolicyName,
                 ISlidingWindowLimiterPolicyMetadata => SlidingWindowLimiterPolicy.PolicyName,
+                ITokenBucketRateLimiterPolicyMetadata => TokenBucketRateLimiterPolicy.PolicyName,
                 _ => throw new InvalidOperationException("Unsupported rate limiter policy metadata."),
             };
         }
