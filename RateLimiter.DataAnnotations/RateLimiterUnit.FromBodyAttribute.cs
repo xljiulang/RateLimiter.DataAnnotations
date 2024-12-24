@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace RateLimiter.DataAnnotations
 {
+    /// <summary>
+    /// RateLimiterUnit 类的部分定义，包含限流单元来源的特性。
+    /// </summary>
     public static partial class RateLimiterUnit
     {
         /// <summary>
@@ -21,11 +24,20 @@ namespace RateLimiter.DataAnnotations
             /// </summary>
             public string UnitName { get; }
 
+            /// <summary>
+            /// 初始化 <see cref="FromBodyAttribute"/> 类的新实例。
+            /// </summary>
+            /// <param name="unitName">单元的名称。</param>
             public FromBodyAttribute(string unitName)
             {
                 UnitName = unitName;
             }
 
+            /// <summary>
+            /// 根据给定的 HTTP 上下文异步检索用于速率限制的单位标识符。
+            /// </summary>
+            /// <param name="context">包含请求信息的 HTTP 上下文。</param>
+            /// <returns>返回表示异步操作的任务。任务结果包含单元标识符，如果无法检索则为 null。</returns>
             public async ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 context.Request.EnableBuffering();
@@ -51,7 +63,7 @@ namespace RateLimiter.DataAnnotations
             /// <param name="body">请求体流。</param>
             /// <param name="unitName">单元的名称。</param>
             /// <param name="cancellationToken">取消令牌。</param>
-            /// <returns>表示异步操作的任务。任务结果包含单元。</returns>
+            /// <returns>表示异步操作的任务。任务结果包含单元标识符，如果无法检索则为 null。</returns>
             private static async ValueTask<string?> ReadUnitFromJsonAsync(Stream body, string unitName, CancellationToken cancellationToken)
             {
                 using var document = await JsonDocument.ParseAsync(body, default, cancellationToken);

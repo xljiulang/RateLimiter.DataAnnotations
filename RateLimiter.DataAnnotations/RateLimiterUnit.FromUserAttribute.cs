@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RateLimiter.DataAnnotations
 {
+    /// <summary>
+    /// RateLimiterUnit 类的部分定义，包含限流单元来源的特性。
+    /// </summary>
     public static partial class RateLimiterUnit
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace RateLimiter.DataAnnotations
         public sealed class FromUserAttribute : Attribute, IRateLimiterUnitMetadata
         {
             /// <summary>
-            /// 获取单元的名称。
+            /// 获取单元的名称(即CliamType)。
             /// </summary>
             public string UnitName { get; }
 
