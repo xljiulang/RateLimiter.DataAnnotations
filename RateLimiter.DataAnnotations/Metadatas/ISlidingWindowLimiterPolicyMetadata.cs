@@ -7,6 +7,11 @@ namespace RateLimiter.DataAnnotations.Metadatas
     /// </summary>
     public interface ISlidingWindowLimiterPolicyMetadata : IRateLimiterPolicyMetadata
     {
+        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        {
+            return RateLimitPartition.GetSlidingWindowLimiter(key, k => GetLimiterOptions(k.Unit));
+        }
+
         /// <summary>
         /// 根据指定的单位获取滑动窗口限流器的选项。
         /// </summary>

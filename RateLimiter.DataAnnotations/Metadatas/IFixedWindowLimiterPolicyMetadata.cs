@@ -7,6 +7,11 @@ namespace RateLimiter.DataAnnotations.Metadatas
     /// </summary>
     public interface IFixedWindowLimiterPolicyMetadata : IRateLimiterPolicyMetadata
     {
+        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        {
+            return RateLimitPartition.GetFixedWindowLimiter(key, k => GetLimiterOptions(k.Unit));
+        }
+
         /// <summary>
         /// 根据指定的单位获取固定窗口限流器的选项。
         /// </summary>

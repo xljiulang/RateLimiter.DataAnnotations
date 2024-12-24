@@ -1,9 +1,17 @@
-﻿namespace RateLimiter.DataAnnotations.Metadatas
+﻿using System.Threading.RateLimiting;
+
+namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
-    /// 表示速率限制器策略的元数据标记接口。
+    /// 表示速率限制器策略元数据的接口
     /// </summary>
     public interface IRateLimiterPolicyMetadata
     {
+        /// <summary>
+        /// 获取指定分区键的速率限制分区
+        /// </summary>
+        /// <param name="key">分区键</param>
+        /// <returns>速率限制分区</returns>
+        RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key);
     }
 }

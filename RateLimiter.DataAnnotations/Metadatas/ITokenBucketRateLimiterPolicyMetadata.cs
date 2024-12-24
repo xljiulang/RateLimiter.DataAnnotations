@@ -7,6 +7,11 @@ namespace RateLimiter.DataAnnotations.Metadatas
     /// </summary>
     public interface ITokenBucketRateLimiterPolicyMetadata : IRateLimiterPolicyMetadata
     {
+        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        {
+            return RateLimitPartition.GetTokenBucketLimiter(key, k => GetLimiterOptions(k.Unit));
+        }
+
         /// <summary>
         /// 获取限流器选项。
         /// </summary>

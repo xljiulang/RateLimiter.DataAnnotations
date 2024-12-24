@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using RateLimiter.DataAnnotations.Middlewares;
+﻿using RateLimiter.DataAnnotations.Middlewares;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -15,8 +14,7 @@ namespace Microsoft.AspNetCore.Builder
         /// <returns>更新后的应用程序构建器。</returns>
         public static IApplicationBuilder UseRateLimiterDataAnnotations(this IApplicationBuilder app)
         {
-            var middleware = ActivatorUtilities.CreateInstance<RateLimiterDataAnnotationsMiddleware>(app.ApplicationServices);
-            return app.Use(next => context => middleware.InvokeAsync(context, next));
+            return app.UseMiddleware<RateLimiterDataAnnotationsMiddleware>();
         }
     }
 }

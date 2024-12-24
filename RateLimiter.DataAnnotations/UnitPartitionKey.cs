@@ -2,12 +2,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RateLimiter.DataAnnotations.Policies
+namespace RateLimiter.DataAnnotations
 {
     /// <summary>
     /// 表示一个单元分区键
     /// </summary>
-    readonly struct UnitPartitionKey : IEquatable<UnitPartitionKey>
+    public readonly struct UnitPartitionKey : IEquatable<UnitPartitionKey>
     {
         /// <summary>
         /// 获取None实例

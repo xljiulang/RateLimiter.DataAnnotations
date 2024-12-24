@@ -7,6 +7,11 @@ namespace RateLimiter.DataAnnotations.Metadatas
     /// </summary>
     public interface IConcurrencyLimiterPolicyMetadata : IRateLimiterPolicyMetadata
     {
+        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        {
+            return RateLimitPartition.GetConcurrencyLimiter(key, k => GetLimiterOptions(k.Unit));
+        }
+
         /// <summary>
         /// 获取指定单元的并发限制器选项。
         /// </summary>

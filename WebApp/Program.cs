@@ -7,12 +7,17 @@ namespace WebApp
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddRateLimiter(o => o.AddRateLimiterDataAnnotations());
+            builder.Services.AddRateLimiterDataAnnotations();
+            builder.Services.AddRateLimiter(x => x.OnRejected = (context, cancellationToken) =>
+            {
+                context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                return ValueTask.CompletedTask;
+            });
 
             var app = builder.Build();
- 
+
             app.UseRouting();
-          
+
             // app.UseAuthentication();
             // app.UseAuthorization();
 
