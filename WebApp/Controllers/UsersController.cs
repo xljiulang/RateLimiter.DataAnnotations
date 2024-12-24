@@ -10,7 +10,7 @@ namespace WebApp.Controllers
     {
         [HttpGet("{id}")]
         [RateLimiterUnit.FromRoute(unitName: "id")]
-        [RateLimiterPolicy.SlidingWindowLimiter(permitLimit: 8, windowSeconds: 60, segmentsPerWindow: 10)]
+        [RateLimiterPolicy.FixedWindowLimiter(permitLimit: 8, windowSeconds: 60)]
         public User Get(string id)
         {
             return new User { Id = id };

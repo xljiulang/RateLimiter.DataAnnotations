@@ -19,6 +19,7 @@ namespace Microsoft.AspNetCore.Builder
         public static RateLimiterOptions AddRateLimiterDataAnnotations(this RateLimiterOptions options)
         {
             options.AddPolicy<UnitPartitionKey, ConcurrencyLimiterPolicy>(ConcurrencyLimiterPolicy.PolicyName);
+            options.AddPolicy<UnitPartitionKey, FixedWindowLimiterPolicy>(FixedWindowLimiterPolicy.PolicyName);
             options.AddPolicy<UnitPartitionKey, SlidingWindowLimiterPolicy>(SlidingWindowLimiterPolicy.PolicyName);
             return options;
         }
@@ -62,6 +63,7 @@ namespace Microsoft.AspNetCore.Builder
             return policyMetadata switch
             {
                 IConcurrencyLimiterPolicyMetadata => ConcurrencyLimiterPolicy.PolicyName,
+                IFixedWindowLimiterPolicyMetadata => FixedWindowLimiterPolicy.PolicyName,
                 ISlidingWindowLimiterPolicyMetadata => SlidingWindowLimiterPolicy.PolicyName,
                 _ => throw new InvalidOperationException("Unsupported rate limiter policy metadata."),
             };

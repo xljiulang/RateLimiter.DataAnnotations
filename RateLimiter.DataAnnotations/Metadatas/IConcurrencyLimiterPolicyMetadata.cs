@@ -1,5 +1,4 @@
-﻿using RateLimiter.DataAnnotations.Policies;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
 
 namespace RateLimiter.DataAnnotations.Metadatas
 {
