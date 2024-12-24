@@ -1,8 +1,11 @@
 ## RateLimiter.DataAnnotations
 能让你在Asp.netCore中使用Attribute来配置策略一个项目。
 
-## 如何使用
-### 服务注册和使用中间件
+### Nuget
+[RateLimiter.DataAnnotations](https://www.nuget.org/packages/RateLimiter.DataAnnotations)
+
+### 如何使用
+#### 服务注册和使用中间件
 ```c#
 public static void Main(string[] args)
 {
@@ -38,7 +41,7 @@ public static void Main(string[] args)
 }
 ```
 
-### 为Action指定特性
+#### 为Action指定特性
 ```c#
 [ApiController]
 [Route("/api/[controller]")]
