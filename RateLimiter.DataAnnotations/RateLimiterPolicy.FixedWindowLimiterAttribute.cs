@@ -4,10 +4,7 @@ using System.Threading.RateLimiting;
 
 namespace RateLimiter.DataAnnotations
 {
-    /// <summary>
-    /// RateLimiterPolicy 类的部分定义，包含限流策略的特性。
-    /// </summary>
-    public static partial class RateLimiterPolicy
+    partial class RateLimiterPolicy
     {
         /// <summary>
         /// 表示一个固定窗口限流器的属性。

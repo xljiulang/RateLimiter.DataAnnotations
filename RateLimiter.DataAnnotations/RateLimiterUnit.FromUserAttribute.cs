@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace RateLimiter.DataAnnotations
 {
-    /// <summary>
-    /// RateLimiterUnit 类的部分定义，包含限流单元来源的特性。
-    /// </summary>
-    public static partial class RateLimiterUnit
+    partial class RateLimiterUnit
     {
         /// <summary>
         /// 指定限流单元单位来源是<see cref="ClaimsPrincipal"/>类型的用户的特性。
