@@ -9,8 +9,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 表示令牌桶限流器的属性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class TokenBucketAttribute : Attribute, ITokenBucketRateLimiterMetadata
+        public class TokenBucketAttribute : RateLimiter, ITokenBucketRateLimiterMetadata
         {
             /// <summary>
             /// 获取或设置补充周期的秒数。

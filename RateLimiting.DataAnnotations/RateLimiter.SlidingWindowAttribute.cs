@@ -9,8 +9,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 定义滑动窗口限流器的特性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class SlidingWindowAttribute : Attribute, ISlidingWindowRateLimiterMetadata
+        public class SlidingWindowAttribute : RateLimiter, ISlidingWindowRateLimiterMetadata
         {
             /// <summary>
             /// 获取滑动窗口限流器的许可限制。

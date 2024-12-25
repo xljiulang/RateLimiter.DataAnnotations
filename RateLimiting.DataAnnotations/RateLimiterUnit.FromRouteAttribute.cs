@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using RateLimiting.DataAnnotations.Metadatas;
-using System;
 using System.Threading.Tasks;
 
 namespace RateLimiting.DataAnnotations
@@ -11,8 +9,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 指定限流单元单位来源是路由的特性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class FromRouteAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromRouteAttribute : RateLimiterUnit
         {
             /// <summary>
             /// 获取单元的名称。
@@ -29,7 +26,7 @@ namespace RateLimiting.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public virtual ValueTask<string?> GetUnitAsync(HttpContext context)
+            public override ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 var unit = context.GetRouteValue(UnitName)?.ToString();
                 return ValueTask.FromResult(unit);

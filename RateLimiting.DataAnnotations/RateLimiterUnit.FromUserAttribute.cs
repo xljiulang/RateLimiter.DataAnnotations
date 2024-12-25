@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiting.DataAnnotations.Metadatas;
-using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -11,8 +9,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 指定限流单元单位来源是<see cref="ClaimsPrincipal"/>类型的用户的特性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class FromUserAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromUserAttribute : RateLimiterUnit
         {
             /// <summary>
             /// 获取单元的名称(即CliamType)。
@@ -29,7 +26,7 @@ namespace RateLimiting.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public virtual ValueTask<string?> GetUnitAsync(HttpContext context)
+            public override ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 var unit = context.User.FindFirstValue(UnitName);
                 return ValueTask.FromResult(unit);

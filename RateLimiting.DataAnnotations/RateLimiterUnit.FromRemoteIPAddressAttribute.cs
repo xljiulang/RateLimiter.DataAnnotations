@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiting.DataAnnotations.Metadatas;
-using System;
 using System.Threading.Tasks;
 
 namespace RateLimiting.DataAnnotations
@@ -10,11 +8,10 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 指定限流单元单位来源是远程IP地址的特性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class FromRemoteIPAddressAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromRemoteIPAddressAttribute : RateLimiterUnit
         {
             /// <inheritdoc></inheritdoc>/>
-            public virtual ValueTask<string?> GetUnitAsync(HttpContext context)
+            public override ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 var unit = context.Connection.RemoteIpAddress?.ToString();
                 return ValueTask.FromResult(unit);

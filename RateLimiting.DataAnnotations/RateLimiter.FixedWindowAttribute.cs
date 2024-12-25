@@ -9,8 +9,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 表示一个固定窗口限流器的属性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class FixedWindowAttribute : Attribute, IFixedWindowRateLimiterMetadata
+        public class FixedWindowAttribute : RateLimiter, IFixedWindowRateLimiterMetadata
         {
             /// <summary>
             /// 获取每个窗口允许的请求数。

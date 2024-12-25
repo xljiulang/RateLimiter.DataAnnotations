@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiting.DataAnnotations.Metadatas;
 using System;
 using System.IO;
 using System.Text.Json;
@@ -13,8 +12,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 指定限流单元单位来源是请求体json的特性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class FromBodyAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromBodyAttribute : RateLimiterUnit
         {
             /// <summary>
             /// 获取单元的名称。
@@ -31,7 +29,7 @@ namespace RateLimiting.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public virtual async ValueTask<string?> GetUnitAsync(HttpContext context)
+            public override async ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 context.Request.EnableBuffering();
                 var position = context.Request.Body.Position;

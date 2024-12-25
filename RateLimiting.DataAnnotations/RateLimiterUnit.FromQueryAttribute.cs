@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiting.DataAnnotations.Metadatas;
-using System;
 using System.Threading.Tasks;
 
 namespace RateLimiting.DataAnnotations
@@ -10,8 +8,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 指定限流单元单位来源是Query的特性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class FromQueryAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromQueryAttribute : RateLimiterUnit
         {
             /// <summary>
             /// 获取单元的名称。
@@ -28,7 +25,7 @@ namespace RateLimiting.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public virtual ValueTask<string?> GetUnitAsync(HttpContext context)
+            public override ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 var unit = context.Request.Query.TryGetValue(UnitName, out var unitValue) ? (string?)unitValue : null;
                 return ValueTask.FromResult(unit);

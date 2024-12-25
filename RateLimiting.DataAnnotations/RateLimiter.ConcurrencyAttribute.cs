@@ -1,5 +1,4 @@
 ﻿using RateLimiting.DataAnnotations.Metadatas;
-using System;
 using System.Threading.RateLimiting;
 
 namespace RateLimiting.DataAnnotations
@@ -9,8 +8,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 表示一个并发限制策略的属性。
         /// </summary>
-        [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public class ConcurrencyAttribute : Attribute, IConcurrencyLimiterMetadata
+        public class ConcurrencyAttribute : RateLimiter, IConcurrencyLimiterMetadata
         {
             /// <summary>
             /// 获取并发数。

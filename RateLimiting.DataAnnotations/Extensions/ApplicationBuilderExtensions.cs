@@ -12,6 +12,7 @@ namespace Microsoft.AspNetCore.Builder
     {
         /// <summary>
         /// 使用限流注解的中间件
+        /// <para>◆ 必此中间件必须在 app.UseRateLimiter()之前</para> 
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
