@@ -1,16 +1,16 @@
-﻿using RateLimiter.DataAnnotations.Metadatas;
+﻿using RateLimiting.DataAnnotations.Metadatas;
 using System;
 using System.Threading.RateLimiting;
 
-namespace RateLimiter.DataAnnotations
+namespace RateLimiting.DataAnnotations
 {
-    partial class RateLimiterPolicy
+    partial class RateLimiter
     {
         /// <summary>
         /// 定义滑动窗口限流器的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class SlidingWindowAttribute : Attribute, ISlidingWindowRateLimiterMetadata
+        public class SlidingWindowAttribute : Attribute, ISlidingWindowRateLimiterMetadata
         {
             /// <summary>
             /// 获取滑动窗口限流器的许可限制。
@@ -56,7 +56,7 @@ namespace RateLimiter.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
+            public virtual SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new SlidingWindowRateLimiterOptions
                 {

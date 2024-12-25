@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35605.110
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RateLimiter.DataAnnotations", "RateLimiter.DataAnnotations\RateLimiter.DataAnnotations.csproj", "{A5F63245-1D58-7CB6-E308-C7CE88EBBF0A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{5A7F8005-C165-6259-8009-1115B9A95056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RateLimiting.DataAnnotations", "RateLimiting.DataAnnotations\RateLimiting.DataAnnotations.csproj", "{A30E6A11-FAEA-A426-F8E1-42E19AD7229E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A5F63245-1D58-7CB6-E308-C7CE88EBBF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5F63245-1D58-7CB6-E308-C7CE88EBBF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5F63245-1D58-7CB6-E308-C7CE88EBBF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5F63245-1D58-7CB6-E308-C7CE88EBBF0A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A7F8005-C165-6259-8009-1115B9A95056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A7F8005-C165-6259-8009-1115B9A95056}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A7F8005-C165-6259-8009-1115B9A95056}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A7F8005-C165-6259-8009-1115B9A95056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30E6A11-FAEA-A426-F8E1-42E19AD7229E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30E6A11-FAEA-A426-F8E1-42E19AD7229E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30E6A11-FAEA-A426-F8E1-42E19AD7229E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30E6A11-FAEA-A426-F8E1-42E19AD7229E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

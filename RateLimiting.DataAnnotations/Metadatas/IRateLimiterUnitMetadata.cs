@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace RateLimiter.DataAnnotations.Metadatas
+namespace RateLimiting.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 提供与单位速率限制相关的元数据的接口。

@@ -1,4 +1,4 @@
-﻿namespace RateLimiter.DataAnnotations
+﻿namespace RateLimiting.DataAnnotations
 {
     /// <summary>
     /// RateLimiterUnit 类的部分定义，包含限流单元来源的特性。

@@ -1,6 +1,6 @@
 ﻿using System.Threading.RateLimiting;
 
-namespace RateLimiter.DataAnnotations.Metadatas
+namespace RateLimiting.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 与滑动窗口限流器相关的元数据接口。

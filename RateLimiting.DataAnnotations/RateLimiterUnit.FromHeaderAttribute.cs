@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiter.DataAnnotations.Metadatas;
+using RateLimiting.DataAnnotations.Metadatas;
 using System;
 using System.Threading.Tasks;
 
-namespace RateLimiter.DataAnnotations
+namespace RateLimiting.DataAnnotations
 {
     partial class RateLimiterUnit
     {
         /// <summary>
-        /// 指定限流单元单位来源是Query的特性。
+        /// 指定限流单元单位来源是Header的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class FromQueryAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromHeaderAttribute : Attribute, IRateLimiterUnitMetadata
         {
             /// <summary>
             /// 获取单元的名称。
@@ -19,18 +19,18 @@ namespace RateLimiter.DataAnnotations
             public string UnitName { get; }
 
             /// <summary>
-            /// 初始化 <see cref="FromQueryAttribute"/> 类的新实例。
+            /// 初始化 <see cref="FromHeaderAttribute"/> 类的新实例。
             /// </summary>
-            /// <param name="unitName">查询字符串中表示单元名称的键。</param>
-            public FromQueryAttribute(string unitName)
+            /// <param name="unitName">用于限流的单元名称。</param>
+            public FromHeaderAttribute(string unitName)
             {
                 UnitName = unitName;
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public ValueTask<string?> GetUnitAsync(HttpContext context)
+            public virtual ValueTask<string?> GetUnitAsync(HttpContext context)
             {
-                var unit = context.Request.Query.TryGetValue(UnitName, out var unitValue) ? (string?)unitValue : null;
+                var unit = context.Request.Headers.TryGetValue(UnitName, out var unitValue) ? (string?)unitValue : null;
                 return ValueTask.FromResult(unit);
             }
         }

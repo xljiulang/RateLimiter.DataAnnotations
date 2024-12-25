@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.RateLimiting;
-using RateLimiter.DataAnnotations.Metadatas;
+using RateLimiting.DataAnnotations.Metadatas;
 using System;
 using System.Linq;
 
@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Builder
     public static class EndpointConventionBuilderExtensions
     {
         /// <summary>
-        /// 将单位限流器策略约定添加到 <see cref="IEndpointConventionBuilder"/>。
+        /// 将单位限流器约定添加到 <see cref="IEndpointConventionBuilder"/>。
         /// </summary>
         /// <param name="builder">要添加约定的 <see cref="IEndpointConventionBuilder"/>。</param>
         /// <returns>添加了约定的 <see cref="IEndpointConventionBuilder"/>。</returns>
@@ -30,10 +30,10 @@ namespace Microsoft.AspNetCore.Builder
                     throw new InvalidOperationException("Only one rate limiter policy can be applied to an endpoint.");
                 }
 
-                var attribute = endpoint.Metadata.OfType<EnableRateLimitingAttribute>().FirstOrDefault();
-                if (attribute != null)
+                var rateLimitingAttribute = endpoint.Metadata.OfType<EnableRateLimitingAttribute>().FirstOrDefault();
+                if (rateLimitingAttribute != null)
                 {
-                    endpoint.Metadata.Remove(attribute);
+                    endpoint.Metadata.Remove(rateLimitingAttribute);
                 }
 
                 var policyName = nameof(IRateLimiterMetadata);

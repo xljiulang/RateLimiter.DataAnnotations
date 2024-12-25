@@ -1,16 +1,16 @@
-﻿using RateLimiter.DataAnnotations.Metadatas;
+﻿using RateLimiting.DataAnnotations.Metadatas;
 using System;
 using System.Threading.RateLimiting;
 
-namespace RateLimiter.DataAnnotations
+namespace RateLimiting.DataAnnotations
 {
-    partial class RateLimiterPolicy
+    partial class RateLimiter
     {
         /// <summary>
         /// 表示一个并发限制策略的属性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class ConcurrencyAttribute : Attribute, IConcurrencyLimiterMetadata
+        public class ConcurrencyAttribute : Attribute, IConcurrencyLimiterMetadata
         {
             /// <summary>
             /// 获取并发数。
@@ -37,7 +37,7 @@ namespace RateLimiter.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key)
+            public virtual ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new ConcurrencyLimiterOptions
                 {

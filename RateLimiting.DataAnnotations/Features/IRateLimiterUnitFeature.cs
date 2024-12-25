@@ -1,4 +1,4 @@
-﻿namespace RateLimiter.DataAnnotations.Features
+﻿namespace RateLimiting.DataAnnotations.Features
 {
     /// <summary>
     /// 表示限速的单元特性。

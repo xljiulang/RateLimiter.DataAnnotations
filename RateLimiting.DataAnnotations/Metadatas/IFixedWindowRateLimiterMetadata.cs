@@ -1,6 +1,6 @@
 ﻿using System.Threading.RateLimiting;
 
-namespace RateLimiter.DataAnnotations.Metadatas
+namespace RateLimiting.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 表示固定窗口限流器的元数据。

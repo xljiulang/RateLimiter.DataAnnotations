@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiter.DataAnnotations.Metadatas;
+using RateLimiting.DataAnnotations.Metadatas;
 using System;
 using System.Threading.Tasks;
 
-namespace RateLimiter.DataAnnotations
+namespace RateLimiting.DataAnnotations
 {
     partial class RateLimiterUnit
     {
@@ -11,7 +11,7 @@ namespace RateLimiter.DataAnnotations
         /// 指定限流单元单位来源是Form的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class FromFormAttribute : Attribute, IRateLimiterUnitMetadata
+        public class FromFormAttribute : Attribute, IRateLimiterUnitMetadata
         {
             /// <summary>
             /// 获取单元的名称。
@@ -28,7 +28,7 @@ namespace RateLimiter.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public ValueTask<string?> GetUnitAsync(HttpContext context)
+            public virtual ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 var unit = context.Request.Form.TryGetValue(UnitName, out var unitValue) ? (string?)unitValue : null;
                 return ValueTask.FromResult(unit);

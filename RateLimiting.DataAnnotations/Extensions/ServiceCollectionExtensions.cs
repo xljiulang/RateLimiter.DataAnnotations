@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using RateLimiter.DataAnnotations;
-using RateLimiter.DataAnnotations.Features;
-using RateLimiter.DataAnnotations.Metadatas;
+using Microsoft.AspNetCore.RateLimiting;
+using RateLimiting.DataAnnotations;
+using RateLimiting.DataAnnotations.Features;
+using RateLimiting.DataAnnotations.Metadatas;
+using System.Threading;
+using System;
 using System.Threading.RateLimiting;
+using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,8 +20,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 添加速率限制数据注释服务
         /// </summary>
         /// <param name="services">服务集合</param>
+        /// <param name="rejectedHandler">被限制时的处理</param>
         /// <returns>更新后的服务集合</returns>
-        public static IServiceCollection AddRateLimiterDataAnnotations(this IServiceCollection services)
+        public static IServiceCollection AddRateLimiterDataAnnotations(this IServiceCollection services, Func<OnRejectedContext, CancellationToken, ValueTask>? rejectedHandler = null)
         {
             var policyName = nameof(IRateLimiterMetadata);
             services.AddRateLimiter(o => o.AddPolicy(policyName, GetHttpContextPartition));

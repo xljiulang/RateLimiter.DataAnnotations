@@ -1,6 +1,6 @@
 ﻿using System.Threading.RateLimiting;
 
-namespace RateLimiter.DataAnnotations.Metadatas
+namespace RateLimiting.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 定义并发限制器元数据的接口。

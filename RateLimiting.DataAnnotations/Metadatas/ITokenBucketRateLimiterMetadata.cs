@@ -1,6 +1,6 @@
 ﻿using System.Threading.RateLimiting;
 
-namespace RateLimiter.DataAnnotations.Metadatas
+namespace RateLimiting.DataAnnotations.Metadatas
 {
     /// <summary>
     /// 表示令牌桶限流的元数据接口。

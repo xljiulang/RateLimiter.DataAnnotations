@@ -1,4 +1,4 @@
-using RateLimiter.DataAnnotations.Features;
+using RateLimiting.DataAnnotations.Features;
 
 namespace Sample
 {
@@ -9,8 +9,7 @@ namespace Sample
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddRateLimiterDataAnnotations();
-            builder.Services.AddRateLimiter(x => x.OnRejected = (context, cancellationToken) =>
+            builder.Services.AddRateLimiterDataAnnotations((context, cancellationToken) =>
             {
                 var unit = context.HttpContext.Features.Get<IRateLimiterUnitFeature>()?.Unit;
                 context.HttpContext.Response.Headers.TryAdd("X-RateLimit-Unit", unit);

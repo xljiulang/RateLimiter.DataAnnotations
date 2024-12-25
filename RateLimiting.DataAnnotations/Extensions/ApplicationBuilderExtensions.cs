@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RateLimiter.DataAnnotations.Features;
-using RateLimiter.DataAnnotations.Metadatas;
+using RateLimiting.DataAnnotations.Features;
+using RateLimiting.DataAnnotations.Metadatas;
 using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Builder
     public static class ApplicationBuilderExtensions
     {
         /// <summary>
-        /// 使用RateLimiterDataAnnotations的中间件
+        /// 使用限流注解的中间件
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
