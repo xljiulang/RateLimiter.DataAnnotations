@@ -13,9 +13,7 @@ public static void Main(string[] args)
 
     builder.Services.AddControllers();
     // 注册限流的DataAnnotations
-    builder.Services.AddRateLimiterDataAnnotations();
-    // 配置限流触发后的响应
-    builder.Services.AddRateLimiter(x => x.OnRejected = (context, cancellationToken) =>
+    builder.Services.AddRateLimiterDataAnnotations((context, cancellationToken) =>
     {
         var unit = context.HttpContext.Features.Get<IUnitFeature>()?.Unit;
         context.HttpContext.Response.Headers.TryAdd("X-RateLimit-Unit", unit);
@@ -48,24 +46,24 @@ public static void Main(string[] args)
 public class UsersController : ControllerBase
 {
     [HttpGet("{id}")]
-    [RateLimiterUnit.FromRoute(unitName: "id")] // RateLimiterUnit是可选的
-    [RateLimiterPolicy.FixedWindowLimiter(permitLimit: 8, windowSeconds: 60)]
+    [RateLimiterUnit.FromRoute(unitName: "id")]
+    [RateLimiter.FixedWindow(permitLimit: 8, windowSeconds: 60)]
     public User Get(string id)
     {
         return new User { Id = id };
     }
 
     [HttpPost]
-    [RateLimiterUnit.FromBody(unitName: "id")] / RateLimiterUnit是可选的
-    [RateLimiterPolicy.SlidingWindowLimiter(permitLimit: 9, windowSeconds: 60, segmentsPerWindow: 10)]
+    [RateLimiterUnit.FromBody(unitName: "id")]
+    [RateLimiter.SlidingWindow(permitLimit: 9, windowSeconds: 60, segmentsPerWindow: 10)]
     public User Post(User user)
-    {
+    {  
         return user;
     }
 
     [HttpDelete("{id}")]
-    [RateLimiterUnit.FromUser(unitName: ClaimTypes.NameIdentifier)] / RateLimiterUnit是可选的
-    [RateLimiterPolicy.SlidingWindowLimiter(permitLimit: 10, windowSeconds: 60, segmentsPerWindow: 10)]
+    [RateLimiterUnit.FromUser(unitName: ClaimTypes.NameIdentifier)]
+    [RateLimiter.SlidingWindow(permitLimit: 10, windowSeconds: 60, segmentsPerWindow: 10)]
     public bool Delete(string id)
     {
         return true;
