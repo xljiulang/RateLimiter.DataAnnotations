@@ -7,7 +7,7 @@
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Description>能让你在Asp.netCore中使用Attribute来配置策略一个项目。</Description>
-		<PackageProjectUrl>https://github.com/xljiulang/RateLimiter.DataAnnotations</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/xljiulang/RateLimiting.DataAnnotations</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
