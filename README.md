@@ -1,5 +1,5 @@
 ## RateLimiting.DataAnnotations
-能让你在Asp.netCore中使用Attribute来配置策略一个项目。
+在Asp.netCore中使用Attribute来描述限流。
 
 ### Nuget
 [RateLimiting.DataAnnotations](https://www.nuget.org/packages/RateLimiting.DataAnnotations)

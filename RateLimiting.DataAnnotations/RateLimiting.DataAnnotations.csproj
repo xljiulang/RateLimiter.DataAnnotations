@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>0.0.2</Version>
+		<Version>0.0.3</Version>
 		<TargetFramework>net8.0</TargetFramework>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Description>能让你在Asp.netCore中使用Attribute来配置策略一个项目。</Description>
+		<Description>在Asp.netCore中使用Attribute来描述限流。</Description>
 		<PackageProjectUrl>https://github.com/xljiulang/RateLimiting.DataAnnotations</PackageProjectUrl>
 	</PropertyGroup>
 
