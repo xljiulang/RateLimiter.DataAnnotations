@@ -11,14 +11,14 @@ namespace RateLimiting.DataAnnotations
         public class FromQueryAttribute : RateLimiterUnit
         {
             /// <summary>
-            /// 获取单元的名称。
+            /// 获取Query中表示限流单元的键名。
             /// </summary>
             public string UnitName { get; }
 
             /// <summary>
             /// 初始化 <see cref="FromQueryAttribute"/> 类的新实例。
             /// </summary>
-            /// <param name="unitName">查询字符串中表示单元名称的键。</param>
+            /// <param name="unitName">Query中表示限流单元的键名。</param>
             public FromQueryAttribute(string unitName)
             {
                 UnitName = unitName;

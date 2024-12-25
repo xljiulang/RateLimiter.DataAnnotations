@@ -17,7 +17,7 @@ namespace Sample.Controllers
         }
 
         [HttpPost]
-        [RateLimiterUnit.FromBody(unitName: "id")]
+        [RateLimiterUnit.FromBody(unitName: "$.id")]
         [RateLimiter.SlidingWindow(permitLimit: 9, windowSeconds: 60, segmentsPerWindow: 10)]
         public User Post(User user)
         {

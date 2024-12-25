@@ -11,14 +11,14 @@ namespace RateLimiting.DataAnnotations
         public class FromHeaderAttribute : RateLimiterUnit
         {
             /// <summary>
-            /// 获取单元的名称。
+            /// 获取请求头中表示限流单元的键名。
             /// </summary>
             public string UnitName { get; }
 
             /// <summary>
             /// 初始化 <see cref="FromHeaderAttribute"/> 类的新实例。
             /// </summary>
-            /// <param name="unitName">用于限流的单元名称。</param>
+            /// <param name="unitName">请求头中表示限流单元的键名。</param>
             public FromHeaderAttribute(string unitName)
             {
                 UnitName = unitName;

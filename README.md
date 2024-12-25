@@ -15,7 +15,7 @@ public static void Main(string[] args)
     // 注册限流的DataAnnotations
     builder.Services.AddRateLimiterDataAnnotations((context, cancellationToken) =>
     {
-        var unit = context.HttpContext.Features.Get<IUnitFeature>()?.Unit;
+        var unit = context.HttpContext.Features.Get<IRateLimiterUnitFeature>()?.Unit;
         context.HttpContext.Response.Headers.TryAdd("X-RateLimit-Unit", unit);
         context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
         return ValueTask.CompletedTask;
@@ -54,7 +54,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    [RateLimiterUnit.FromBody(unitName: "id")]
+    [RateLimiterUnit.FromBody(unitName: "$.id")]
     [RateLimiter.SlidingWindow(permitLimit: 9, windowSeconds: 60, segmentsPerWindow: 10)]
     public User Post(User user)
     {  

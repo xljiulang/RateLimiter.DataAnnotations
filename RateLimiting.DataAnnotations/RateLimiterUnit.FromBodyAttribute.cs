@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Json.Path;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,17 +17,23 @@ namespace RateLimiting.DataAnnotations
         public class FromBodyAttribute : RateLimiterUnit
         {
             /// <summary>
-            /// 获取单元的名称。
+            /// 获取请求体Json中表示限流单元的JsonPath。
             /// </summary>
-            public string UnitName { get; }
+            public JsonPath UnitName { get; }
 
             /// <summary>
             /// 初始化 <see cref="FromBodyAttribute"/> 类的新实例。
             /// </summary>
-            /// <param name="unitName">单元的名称。</param>
+            /// <param name="unitName">请求体Json中表示限流单元的JsonPath。例如$.userId</param>
             public FromBodyAttribute(string unitName)
             {
-                UnitName = unitName;
+                var jsonPath = JsonPath.Parse(unitName);
+                if (!jsonPath.IsSingular)
+                {
+                    throw new ArgumentException($"{unitName} is not a singular JsonPath.", nameof(unitName));
+                }
+
+                UnitName = jsonPath;
             }
 
             /// <inheritdoc></inheritdoc>/>
@@ -36,7 +44,11 @@ namespace RateLimiting.DataAnnotations
 
                 try
                 {
-                    return await ReadUnitFromJsonAsync(context.Request.Body, UnitName, context.RequestAborted);
+                    return await this.ReadUnitFromJsonAsync(context.Request.Body, context.RequestAborted);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
                 }
                 catch (Exception)
                 {
@@ -51,30 +63,34 @@ namespace RateLimiting.DataAnnotations
             /// <summary>
             /// 异步从 JSON 请求体中读取单元。
             /// </summary>
-            /// <param name="body">请求体流。</param>
-            /// <param name="unitName">单元的名称。</param>
+            /// <param name="stream">请求体流。</param> 
             /// <param name="cancellationToken">取消令牌。</param>
             /// <returns>表示异步操作的任务。任务结果包含单元标识符，如果无法检索则为 null。</returns>
-            private static async ValueTask<string?> ReadUnitFromJsonAsync(Stream body, string unitName, CancellationToken cancellationToken)
+            private async ValueTask<string?> ReadUnitFromJsonAsync(Stream stream, CancellationToken cancellationToken)
             {
-                using var document = await JsonDocument.ParseAsync(body, default, cancellationToken);
-                if (document.RootElement.TryGetProperty(unitName, out var unitElement))
+                var jsonNode = await JsonNode.ParseAsync(stream, default, default, cancellationToken);
+                var pathResult = this.UnitName.Evaluate(jsonNode);
+
+                if (pathResult.Matches.TryGetSingleValue(out var unitNode) &&
+                    unitNode != null &&
+                    unitNode.TryGetValue<JsonElement>(out var unitElement))
                 {
                     switch (unitElement.ValueKind)
                     {
                         case JsonValueKind.String:
                             return unitElement.GetString();
 
+                        case JsonValueKind.Number:
+                            return unitElement.GetRawText();
+
                         case JsonValueKind.True:
                             return "true";
 
                         case JsonValueKind.False:
                             return "false";
-
-                        case JsonValueKind.Number:
-                            return unitElement.GetRawText();
                     }
                 }
+
                 return null;
             }
         }

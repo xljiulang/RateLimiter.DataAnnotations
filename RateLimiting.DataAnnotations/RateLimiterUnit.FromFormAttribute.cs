@@ -11,14 +11,14 @@ namespace RateLimiting.DataAnnotations
         public class FromFormAttribute : RateLimiterUnit
         {
             /// <summary>
-            /// 获取单元的名称。
+            /// 获取表单中表示限流单元的键名。
             /// </summary>
             public string UnitName { get; }
 
             /// <summary>
             /// 初始化 <see cref="FromFormAttribute"/> 类的新实例。
             /// </summary>
-            /// <param name="unitName">表单中用于限流单元的键名。</param>
+            /// <param name="unitName">表单中表示限流单元的键名。</param>
             public FromFormAttribute(string unitName)
             {
                 UnitName = unitName;

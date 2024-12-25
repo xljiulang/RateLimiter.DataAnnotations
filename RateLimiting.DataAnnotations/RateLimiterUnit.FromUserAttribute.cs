@@ -12,14 +12,14 @@ namespace RateLimiting.DataAnnotations
         public class FromUserAttribute : RateLimiterUnit
         {
             /// <summary>
-            /// 获取单元的名称(即CliamType)。
+            /// 获取用户中表示限流单元的ChiamType。
             /// </summary>
             public string UnitName { get; }
 
             /// <summary>
             /// 初始化 <see cref="FromUserAttribute"/> 类的新实例。
             /// </summary>
-            /// <param name="unitName">单元的名称。</param>
+            /// <param name="unitName">用户中表示限流单元的ChiamType。</param>
             public FromUserAttribute(string unitName)
             {
                 UnitName = unitName;
