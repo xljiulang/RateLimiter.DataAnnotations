@@ -5,9 +5,9 @@ namespace RateLimiter.DataAnnotations.Metadatas
     /// <summary>
     /// 定义并发限制器元数据的接口。
     /// </summary>
-    public interface IConcurrencyLimiterPolicyMetadata : IRateLimiterPolicyMetadata
+    public interface IConcurrencyLimiterMetadata : IRateLimiterMetadata
     {
-        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        RateLimitPartition<UnitPartitionKey> IRateLimiterMetadata.GetPartition(UnitPartitionKey key)
         {
             return RateLimitPartition.GetConcurrencyLimiter(key, GetLimiterOptions);
         }

@@ -19,7 +19,7 @@ namespace Microsoft.AspNetCore.Builder
         {
             builder.Add(endpoint =>
             {
-                var policyMetadataCount = endpoint.Metadata.OfType<IRateLimiterPolicyMetadata>().Count();
+                var policyMetadataCount = endpoint.Metadata.OfType<IRateLimiterMetadata>().Count();
                 if (policyMetadataCount == 0)
                 {
                     return;
@@ -36,7 +36,7 @@ namespace Microsoft.AspNetCore.Builder
                     endpoint.Metadata.Remove(attribute);
                 }
 
-                var policyName = nameof(IRateLimiterPolicyMetadata);
+                var policyName = nameof(IRateLimiterMetadata);
                 endpoint.Metadata.Add(new EnableRateLimitingAttribute(policyName));
             });
 

@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns>更新后的服务集合</returns>
         public static IServiceCollection AddRateLimiterDataAnnotations(this IServiceCollection services)
         {
-            var policyName = nameof(IRateLimiterPolicyMetadata);
+            var policyName = nameof(IRateLimiterMetadata);
             services.AddRateLimiter(o => o.AddPolicy(policyName, GetHttpContextPartition));
             return services;
         }
@@ -37,13 +37,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
             }
 
-            var policyMetadata = endpoint.Metadata.GetMetadata<IRateLimiterPolicyMetadata>();
+            var policyMetadata = endpoint.Metadata.GetMetadata<IRateLimiterMetadata>();
             if (policyMetadata == null)
             {
                 return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
             }
 
-            var unitFeature = httpContext.Features.Get<IUnitFeature>();
+            var unitFeature = httpContext.Features.Get<IRateLimiterUnitFeature>();
             if (unitFeature == null)
             {
                 return policyMetadata.GetPartition(new UnitPartitionKey(endpoint, string.Empty));

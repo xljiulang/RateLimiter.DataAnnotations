@@ -22,14 +22,14 @@ namespace Microsoft.AspNetCore.Builder
 
         private static async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var unitFeature = context.Features.Get<IUnitFeature>();
+            var unitFeature = context.Features.Get<IRateLimiterUnitFeature>();
             if (unitFeature == null)
             {
                 var unitMetadata = context.GetEndpoint()?.Metadata.GetMetadata<IRateLimiterUnitMetadata>();
                 if (unitMetadata != null)
                 {
                     var unit = await unitMetadata.GetUnitAsync(context);
-                    unitFeature = new UnitFeature(unit);
+                    unitFeature = new RateLimiterUnitFeature(unit);
                     context.Features.Set(unitFeature);
                 }
             }
@@ -38,7 +38,7 @@ namespace Microsoft.AspNetCore.Builder
         }
 
 
-        private sealed class UnitFeature(string? unit) : IUnitFeature
+        private sealed class RateLimiterUnitFeature(string? unit) : IRateLimiterUnitFeature
         {
             public string? Unit { get; } = unit;
         }

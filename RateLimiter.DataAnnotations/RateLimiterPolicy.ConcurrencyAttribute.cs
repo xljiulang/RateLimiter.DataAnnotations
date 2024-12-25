@@ -10,7 +10,7 @@ namespace RateLimiter.DataAnnotations
         /// 表示一个并发限制策略的属性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class ConcurrencyLimiterAttribute : Attribute, IConcurrencyLimiterPolicyMetadata
+        public sealed class ConcurrencyAttribute : Attribute, IConcurrencyLimiterMetadata
         {
             /// <summary>
             /// 获取并发数。
@@ -28,14 +28,15 @@ namespace RateLimiter.DataAnnotations
             public QueueProcessingOrder QueueProcessingOrder { get; set; } = QueueProcessingOrder.OldestFirst;
 
             /// <summary>
-            /// 初始化 <see cref="ConcurrencyLimiterAttribute"/> 类的新实例。
+            /// 初始化 <see cref="ConcurrencyAttribute"/> 类的新实例。
             /// </summary>
             /// <param name="permitLimit">并发数限制。</param>
-            public ConcurrencyLimiterAttribute(int permitLimit)
+            public ConcurrencyAttribute(int permitLimit)
             {
                 PermitLimit = permitLimit;
             }
 
+            /// <inheritdoc></inheritdoc>/>
             public ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new ConcurrencyLimiterOptions

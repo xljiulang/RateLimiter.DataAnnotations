@@ -3,11 +3,11 @@
 namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
-    /// 表示令牌桶限流策略的元数据接口。
+    /// 表示令牌桶限流的元数据接口。
     /// </summary>
-    public interface ITokenBucketRateLimiterPolicyMetadata : IRateLimiterPolicyMetadata
+    public interface ITokenBucketRateLimiterMetadata : IRateLimiterMetadata
     {
-        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        RateLimitPartition<UnitPartitionKey> IRateLimiterMetadata.GetPartition(UnitPartitionKey key)
         {
             return RateLimitPartition.GetTokenBucketLimiter(key, GetLimiterOptions);
         }

@@ -28,11 +28,7 @@ namespace RateLimiter.DataAnnotations
                 UnitName = unitName;
             }
 
-            /// <summary>
-            /// 根据给定的 HTTP 上下文异步检索用于速率限制的单位标识符。
-            /// </summary>
-            /// <param name="context">包含请求信息的 HTTP 上下文。</param>
-            /// <returns>返回 null 表示无限制。</returns>
+            /// <inheritdoc></inheritdoc>/>
             public ValueTask<string?> GetUnitAsync(HttpContext context)
             {
                 var unit = context.GetRouteValue(UnitName)?.ToString();

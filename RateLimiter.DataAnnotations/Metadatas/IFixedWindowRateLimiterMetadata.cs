@@ -3,11 +3,11 @@
 namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
-    /// 表示固定窗口限流器策略的元数据。
+    /// 表示固定窗口限流器的元数据。
     /// </summary>
-    public interface IFixedWindowLimiterPolicyMetadata : IRateLimiterPolicyMetadata
+    public interface IFixedWindowRateLimiterMetadata : IRateLimiterMetadata
     {
-        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        RateLimitPartition<UnitPartitionKey> IRateLimiterMetadata.GetPartition(UnitPartitionKey key)
         {
             return RateLimitPartition.GetFixedWindowLimiter(key, GetLimiterOptions);
         }

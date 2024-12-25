@@ -5,9 +5,9 @@ namespace RateLimiter.DataAnnotations.Metadatas
     /// <summary>
     /// 与滑动窗口限流器相关的元数据接口。
     /// </summary>
-    public interface ISlidingWindowLimiterPolicyMetadata : IRateLimiterPolicyMetadata
+    public interface ISlidingWindowRateLimiterMetadata : IRateLimiterMetadata
     {
-        RateLimitPartition<UnitPartitionKey> IRateLimiterPolicyMetadata.GetPartition(UnitPartitionKey key)
+        RateLimitPartition<UnitPartitionKey> IRateLimiterMetadata.GetPartition(UnitPartitionKey key)
         {
             return RateLimitPartition.GetSlidingWindowLimiter(key, GetLimiterOptions);
         }

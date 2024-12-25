@@ -7,10 +7,10 @@ namespace RateLimiter.DataAnnotations
     partial class RateLimiterPolicy
     {
         /// <summary>
-        /// 定义滑动窗口限流策略的特性。
+        /// 定义滑动窗口限流器的特性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class SlidingWindowLimiterAttribute : Attribute, ISlidingWindowLimiterPolicyMetadata
+        public sealed class SlidingWindowAttribute : Attribute, ISlidingWindowRateLimiterMetadata
         {
             /// <summary>
             /// 获取滑动窗口限流器的许可限制。
@@ -43,19 +43,19 @@ namespace RateLimiter.DataAnnotations
             public int QueueLimit { get; set; }
 
             /// <summary>
-            /// 初始化 <see cref="SlidingWindowLimiterAttribute"/> 类的新实例。
+            /// 初始化 <see cref="SlidingWindowAttribute"/> 类的新实例。
             /// </summary>
             /// <param name="permitLimit">滑动窗口限流器的许可限制。</param>
             /// <param name="windowSeconds">滑动窗口限流器的窗口持续时间（秒）。</param>
             /// <param name="segmentsPerWindow">滑动窗口限流器的每个窗口的段数。</param>
-            public SlidingWindowLimiterAttribute(int permitLimit, int windowSeconds, int segmentsPerWindow)
+            public SlidingWindowAttribute(int permitLimit, int windowSeconds, int segmentsPerWindow)
             {
                 PermitLimit = permitLimit;
                 WindowSeconds = windowSeconds;
                 SegmentsPerWindow = segmentsPerWindow;
             }
 
-
+            /// <inheritdoc></inheritdoc>/>
             public SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new SlidingWindowRateLimiterOptions

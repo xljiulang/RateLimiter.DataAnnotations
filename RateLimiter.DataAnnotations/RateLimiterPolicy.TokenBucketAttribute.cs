@@ -10,7 +10,7 @@ namespace RateLimiter.DataAnnotations
         /// 表示令牌桶限流器的属性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class TokenBucketRateLimiterAttribute : Attribute, ITokenBucketRateLimiterPolicyMetadata
+        public sealed class TokenBucketAttribute : Attribute, ITokenBucketRateLimiterMetadata
         {
             /// <summary>
             /// 获取或设置补充周期的秒数。
@@ -42,7 +42,7 @@ namespace RateLimiter.DataAnnotations
             /// </summary>
             public int QueueLimit { get; set; }
 
-
+            /// <inheritdoc></inheritdoc>/>
             public TokenBucketRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new TokenBucketRateLimiterOptions

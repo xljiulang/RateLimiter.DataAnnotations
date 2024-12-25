@@ -3,9 +3,9 @@
 namespace RateLimiter.DataAnnotations.Metadatas
 {
     /// <summary>
-    /// 表示速率限制器策略元数据的接口
+    /// 表示速率限制器元数据的接口
     /// </summary>
-    public interface IRateLimiterPolicyMetadata
+    public interface IRateLimiterMetadata
     {
         /// <summary>
         /// 获取指定分区键的速率限制分区

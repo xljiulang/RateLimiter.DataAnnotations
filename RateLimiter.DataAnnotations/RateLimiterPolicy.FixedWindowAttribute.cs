@@ -10,7 +10,7 @@ namespace RateLimiter.DataAnnotations
         /// 表示一个固定窗口限流器的属性。
         /// </summary>
         [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-        public sealed class FixedWindowLimiterAttribute : Attribute, IFixedWindowLimiterPolicyMetadata
+        public sealed class FixedWindowAttribute : Attribute, IFixedWindowRateLimiterMetadata
         {
             /// <summary>
             /// 获取每个窗口允许的请求数。
@@ -38,17 +38,17 @@ namespace RateLimiter.DataAnnotations
             public int QueueLimit { get; set; }
 
             /// <summary>
-            /// 初始化 <see cref="FixedWindowLimiterAttribute"/> 类的新实例。
+            /// 初始化 <see cref="FixedWindowAttribute"/> 类的新实例。
             /// </summary>
             /// <param name="permitLimit">每个窗口允许的请求数。</param>
             /// <param name="windowSeconds">窗口的持续时间（以秒为单位）。</param>
-            public FixedWindowLimiterAttribute(int permitLimit, int windowSeconds)
+            public FixedWindowAttribute(int permitLimit, int windowSeconds)
             {
                 PermitLimit = permitLimit;
                 WindowSeconds = windowSeconds;
             }
 
-           
+            /// <inheritdoc></inheritdoc>/>
             public FixedWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new FixedWindowRateLimiterOptions
