@@ -13,6 +13,9 @@ namespace RateLimiting.DataAnnotations
             /// <inheritdoc></inheritdoc>/>
             public override ValueTask<string?> GetUnitAsync(HttpContext context)
             {
+                if (context.Request.Headers.TryGetValue("X-Forwarded-For", out var ip) && System.Net.IPAddress.TryParse(ip, out _))
+                    return ValueTask.FromResult((string?)ip);
+
                 var unit = context.Connection.RemoteIpAddress?.ToString();
                 return ValueTask.FromResult(unit);
             }

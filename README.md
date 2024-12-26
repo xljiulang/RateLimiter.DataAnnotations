@@ -55,6 +55,8 @@ public class UsersController : ControllerBase
 
     [HttpPost]
     [RateLimiterUnit.FromBody(unitName: "$.id")]
+    [RateLimiterUnit.FromBody(unitName: "$.name")]
+    [RateLimiterUnit.FromRemoteIPAddress()]
     [RateLimiter.SlidingWindow(permitLimit: 9, windowSeconds: 60, segmentsPerWindow: 10)]
     public User Post(User user)
     {  
