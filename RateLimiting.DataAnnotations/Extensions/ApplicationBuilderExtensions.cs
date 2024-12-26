@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using RateLimiting.DataAnnotations.Features;
 using RateLimiting.DataAnnotations.Metadatas;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
@@ -26,10 +28,10 @@ namespace Microsoft.AspNetCore.Builder
             var unitFeature = context.Features.Get<IRateLimiterUnitFeature>();
             if (unitFeature == null)
             {
-                var unitMetadata = context.GetEndpoint()?.Metadata.GetMetadata<IRateLimiterUnitMetadata>();
-                if (unitMetadata != null)
+                var metadatas = context.GetEndpoint()?.Metadata.GetOrderedMetadata<IRateLimiterUnitMetadata>();
+                if (metadatas?.Count > 0)
                 {
-                    var unit = await unitMetadata.GetUnitAsync(context);
+                    var unit = await GetUnitAsync(metadatas, context);
                     unitFeature = new RateLimiterUnitFeature(unit);
                     context.Features.Set(unitFeature);
                 }
@@ -38,6 +40,15 @@ namespace Microsoft.AspNetCore.Builder
             await next(context);
         }
 
+        private static async Task<string?> GetUnitAsync(IReadOnlyList<IRateLimiterUnitMetadata> metadatas, HttpContext context)
+        {
+            if (metadatas.Count == 1)
+                return await metadatas[0].GetUnitAsync(context);
+
+            var units = await Task.WhenAll(metadatas.Select(async x => await x.GetUnitAsync(context)));
+            var unit = string.Join(":", units);
+            return unit;
+        }
 
         private sealed class RateLimiterUnitFeature(string? unit) : IRateLimiterUnitFeature
         {

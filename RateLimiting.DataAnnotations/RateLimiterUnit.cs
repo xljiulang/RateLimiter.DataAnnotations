@@ -10,7 +10,7 @@ namespace RateLimiting.DataAnnotations
     /// <para>◆ 此特性缺省时表示对所有请求进行限流。</para>
     /// <para>◆ 此特性获取到的Unit值为null时将取消限流。</para>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public abstract partial class RateLimiterUnit : Attribute, IRateLimiterUnitMetadata
     {
         /// <inheritdoc></inheritdoc>/>
