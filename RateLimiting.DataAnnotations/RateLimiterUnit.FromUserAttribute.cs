@@ -17,7 +17,7 @@ namespace RateLimiting.DataAnnotations
             public string UnitName { get; }
 
             /// <summary>
-            /// 初始化 <see cref="FromUserAttribute"/> 类的新实例。
+            /// 限流单元单位来源是<see cref="ClaimsPrincipal"/>类型的用户的特性。
             /// </summary>
             /// <param name="unitName">用户中表示限流单元的ChiamType。</param>
             public FromUserAttribute(string unitName)

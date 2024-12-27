@@ -1,5 +1,4 @@
-﻿using RateLimiting.DataAnnotations.Metadatas;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
 
 namespace RateLimiting.DataAnnotations
 {
@@ -8,7 +7,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 表示一个并发限制策略的属性。
         /// </summary>
-        public class ConcurrencyAttribute : RateLimiter, IConcurrencyLimiterMetadata
+        public class ConcurrencyAttribute : RateLimiter
         {
             /// <summary>
             /// 获取并发数。
@@ -35,7 +34,17 @@ namespace RateLimiting.DataAnnotations
             }
 
             /// <inheritdoc></inheritdoc>/>
-            public virtual ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key)
+            public sealed override RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key)
+            {
+                return RateLimitPartition.GetConcurrencyLimiter(key, GetLimiterOptions);
+            }
+
+            /// <summary>
+            /// 获取指定单元的并发限制器选项。
+            /// </summary>
+            /// <param name="key">单元分区键。</param>
+            /// <returns>指定单元的并发限制器选项。</returns>
+            protected virtual ConcurrencyLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new ConcurrencyLimiterOptions
                 {

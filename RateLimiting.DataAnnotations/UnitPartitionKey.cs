@@ -35,55 +35,31 @@ namespace RateLimiting.DataAnnotations
             Unit = unit;
         }
 
-        /// <summary>
-        /// 确定当前对象是否等于同一类型的另一个对象
-        /// </summary>
-        /// <param name="other">要与当前对象进行比较的对象</param>
-        /// <returns>如果当前对象等于 <paramref name="other"/> 参数，则为 true；否则为 false</returns>
+        /// <inheritdoc></inheritdoc>/>
         public readonly bool Equals(UnitPartitionKey other)
         {
             return Endpoint == other.Endpoint && Unit == other.Unit;
         }
 
-        /// <summary>
-        /// 确定当前对象是否等于另一个对象
-        /// </summary>
-        /// <param name="obj">要与当前对象进行比较的对象</param>
-        /// <returns>如果当前对象等于 <paramref name="obj"/> 参数，则为 true；否则为 false</returns>
+        /// <inheritdoc></inheritdoc>/>
         public override readonly bool Equals([NotNullWhen(true)] object? obj)
         {
             return obj is UnitPartitionKey other && Equals(other);
         }
 
-        /// <summary>
-        /// 用作默认哈希函数
-        /// </summary>
-        /// <returns>当前对象的哈希代码</returns>
+        /// <inheritdoc></inheritdoc>/>
         public override readonly int GetHashCode()
         {
-            var hashCode = new HashCode();
-            hashCode.Add(Endpoint);
-            hashCode.Add(Unit);
-            return hashCode.ToHashCode();
+            return HashCode.Combine(Endpoint, Unit);
         }
 
-        /// <summary>
-        /// 确定两个 <see cref="UnitPartitionKey"/> 实例是否相等
-        /// </summary>
-        /// <param name="left">左侧实例</param>
-        /// <param name="right">右侧实例</param>
-        /// <returns>如果两个实例相等，则为 true；否则为 false</returns>
+        /// <inheritdoc></inheritdoc>/>
         public static bool operator ==(UnitPartitionKey left, UnitPartitionKey right)
         {
             return left.Equals(right);
         }
 
-        /// <summary>
-        /// 确定两个 <see cref="UnitPartitionKey"/> 实例是否不相等
-        /// </summary>
-        /// <param name="left">左侧实例</param>
-        /// <param name="right">右侧实例</param>
-        /// <returns>如果两个实例不相等，则为 true；否则为 false</returns>
+        /// <inheritdoc></inheritdoc>/>
         public static bool operator !=(UnitPartitionKey left, UnitPartitionKey right)
         {
             return !(left == right);

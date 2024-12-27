@@ -1,5 +1,4 @@
-﻿using RateLimiting.DataAnnotations.Metadatas;
-using System;
+﻿using System;
 using System.Threading.RateLimiting;
 
 namespace RateLimiting.DataAnnotations
@@ -9,7 +8,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 表示一个固定窗口限流器的属性。
         /// </summary>
-        public class FixedWindowAttribute : RateLimiter, IFixedWindowRateLimiterMetadata
+        public class FixedWindowAttribute : RateLimiter
         {
             /// <summary>
             /// 获取每个窗口允许的请求数。
@@ -47,8 +46,19 @@ namespace RateLimiting.DataAnnotations
                 WindowSeconds = windowSeconds;
             }
 
+
             /// <inheritdoc></inheritdoc>/>
-            public virtual FixedWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
+            public sealed override RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key)
+            {
+                return RateLimitPartition.GetFixedWindowLimiter(key, GetLimiterOptions);
+            }
+
+            /// <summary>
+            /// 根据指定的单位获取固定窗口限流器的选项。
+            /// </summary>
+            /// <param name="key">单元分区键。</param>
+            /// <returns>固定窗口限流器的选项。</returns>
+            protected virtual FixedWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new FixedWindowRateLimiterOptions
                 {

@@ -22,7 +22,7 @@ namespace RateLimiting.DataAnnotations
             public JsonPath UnitName { get; }
 
             /// <summary>
-            /// 初始化 <see cref="FromBodyAttribute"/> 类的新实例。
+            /// 限流单元单位来源是请求体json的特性。
             /// </summary>
             /// <param name="unitName">请求体Json中表示限流单元的JsonPath。例如$.userId</param>
             public FromBodyAttribute(string unitName)
@@ -60,12 +60,7 @@ namespace RateLimiting.DataAnnotations
                 }
             }
 
-            /// <summary>
-            /// 异步从 JSON 请求体中读取单元。
-            /// </summary>
-            /// <param name="stream">请求体流。</param> 
-            /// <param name="cancellationToken">取消令牌。</param>
-            /// <returns>表示异步操作的任务。任务结果包含单元标识符，如果无法检索则为 null。</returns>
+
             private async ValueTask<string?> ReadUnitFromJsonAsync(Stream stream, CancellationToken cancellationToken)
             {
                 var jsonNode = await JsonNode.ParseAsync(stream, default, default, cancellationToken);

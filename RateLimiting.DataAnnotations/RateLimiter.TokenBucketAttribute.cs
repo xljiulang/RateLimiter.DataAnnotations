@@ -1,5 +1,4 @@
-﻿using RateLimiting.DataAnnotations.Metadatas;
-using System;
+﻿using System;
 using System.Threading.RateLimiting;
 
 namespace RateLimiting.DataAnnotations
@@ -9,7 +8,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 表示令牌桶限流器的属性。
         /// </summary>
-        public class TokenBucketAttribute : RateLimiter, ITokenBucketRateLimiterMetadata
+        public class TokenBucketAttribute : RateLimiter
         {
             /// <summary>
             /// 获取或设置补充周期的秒数。
@@ -41,8 +40,19 @@ namespace RateLimiting.DataAnnotations
             /// </summary>
             public int QueueLimit { get; set; }
 
+
             /// <inheritdoc></inheritdoc>/>
-            public virtual TokenBucketRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
+            public sealed override RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key)
+            {
+                return RateLimitPartition.GetTokenBucketLimiter(key, GetLimiterOptions);
+            }
+
+            /// <summary>
+            /// 获取限流器选项。
+            /// </summary>
+            /// <param name="key">单元分区键。</param>
+            /// <returns>返回 <see cref="TokenBucketRateLimiterOptions"/> 对象。</returns>
+            protected virtual TokenBucketRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new TokenBucketRateLimiterOptions
                 {

@@ -1,5 +1,4 @@
-﻿using RateLimiting.DataAnnotations.Metadatas;
-using System;
+﻿using System;
 using System.Threading.RateLimiting;
 
 namespace RateLimiting.DataAnnotations
@@ -9,7 +8,7 @@ namespace RateLimiting.DataAnnotations
         /// <summary>
         /// 定义滑动窗口限流器的特性。
         /// </summary>
-        public class SlidingWindowAttribute : RateLimiter, ISlidingWindowRateLimiterMetadata
+        public class SlidingWindowAttribute : RateLimiter
         {
             /// <summary>
             /// 获取滑动窗口限流器的许可限制。
@@ -54,8 +53,19 @@ namespace RateLimiting.DataAnnotations
                 SegmentsPerWindow = segmentsPerWindow;
             }
 
+            /// <summary>
+            /// 根据指定的单位获取滑动窗口限流器的选项。
+            /// </summary>
+            /// <param name="key">单元分区键。</param>
+            /// <returns>滑动窗口限流器的选项。</returns>
+            public sealed override RateLimitPartition<UnitPartitionKey> GetPartition(UnitPartitionKey key)
+            {
+                return RateLimitPartition.GetSlidingWindowLimiter(key, GetLimiterOptions);
+            }
+
+
             /// <inheritdoc></inheritdoc>/>
-            public virtual SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
+            protected virtual SlidingWindowRateLimiterOptions GetLimiterOptions(UnitPartitionKey key)
             {
                 return new SlidingWindowRateLimiterOptions
                 {
