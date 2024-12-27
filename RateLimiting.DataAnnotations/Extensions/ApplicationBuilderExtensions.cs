@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RateLimiting.DataAnnotations;
 using RateLimiting.DataAnnotations.Features;
 using RateLimiting.DataAnnotations.Metadatas;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace Microsoft.AspNetCore.Builder
                 if (unitMetadata != null)
                 {
                     var unit = await unitMetadata.GetUnitAsync(context);
-                    unitFeature = new RateLimiterUnitFeature(unit);
+                    unitFeature = new RateLimiterUnitFeature(unit, unitMetadata.UnitNullHandling);
                     context.Features.Set(unitFeature);
                 }
             }
@@ -39,9 +40,11 @@ namespace Microsoft.AspNetCore.Builder
         }
 
 
-        private sealed class RateLimiterUnitFeature(string? unit) : IRateLimiterUnitFeature
+        private sealed class RateLimiterUnitFeature(string? unit, UnitNullHandling unitNullHandling) : IRateLimiterUnitFeature
         {
             public string? Unit { get; } = unit;
+
+            public UnitNullHandling UnitNullHandling { get; } = unitNullHandling;
         }
     }
 }

@@ -63,12 +63,24 @@ namespace Microsoft.Extensions.DependencyInjection
                 return UnitLimiter(string.Empty);
             }
 
-            if (unitFeature.Unit == null)
+            var unit = unitFeature.Unit;
+            if (unit == null)
             {
-                return NoLimiter();
+                if (unitFeature.UnitNullHandling == UnitNullHandling.NoLimiter)
+                {
+                    return NoLimiter();
+                }
+
+                if (unitFeature.UnitNullHandling == UnitNullHandling.EmptyUnitLimiter)
+                {
+                    return UnitLimiter(string.Empty);
+                }
+
+                throw new NotSupportedException($"{nameof(UnitNullHandling)} value is not supported.");
             }
 
-            return UnitLimiter(unitFeature.Unit);
+            return UnitLimiter(unit);
+
 
 
             static RateLimitPartition<UnitPartitionKey> NoLimiter()
