@@ -6,13 +6,13 @@
     public enum UnitNullHandling
     {
         /// <summary>
-        /// 当unit值为null时，不进行限流。
+        /// 当unit值为null时，禁用限流器。
         /// </summary>
-        NoLimiter = 0,
+        DisableRateLimiter = 0,
 
         /// <summary>
         /// 当unit值为null时，使用string.Empty单元值进行限流。
         /// </summary>
-        EmptyUnitLimiter = 1,
+        TreatAsEmptyUnit = 1,
     }
 }

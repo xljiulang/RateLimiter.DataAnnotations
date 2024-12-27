@@ -66,12 +66,12 @@ namespace Microsoft.Extensions.DependencyInjection
             var unit = unitFeature.Unit;
             if (unit == null)
             {
-                if (unitFeature.UnitNullHandling == UnitNullHandling.NoLimiter)
+                if (unitFeature.UnitNullHandling == UnitNullHandling.DisableRateLimiter)
                 {
                     return NoLimiter();
                 }
 
-                if (unitFeature.UnitNullHandling == UnitNullHandling.EmptyUnitLimiter)
+                if (unitFeature.UnitNullHandling == UnitNullHandling.TreatAsEmptyUnit)
                 {
                     return UnitLimiter(string.Empty);
                 }

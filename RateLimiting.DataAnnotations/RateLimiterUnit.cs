@@ -14,7 +14,7 @@ namespace RateLimiting.DataAnnotations
     {
         /// <summary>
         /// 获取处理null单元的方式。
-        /// 默认为UnitNullHandling.NoLimiter
+        /// 默认为UnitNullHandling.DisableRateLimiter
         /// </summary>
         public UnitNullHandling UnitNullHandling { get; set; }
 
