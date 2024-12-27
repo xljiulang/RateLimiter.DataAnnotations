@@ -24,11 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddRateLimiterDataAnnotations(this IServiceCollection services)
         {
             var policyName = nameof(IRateLimiterMetadata);
-            services.AddRateLimiter(o =>
-            {
-                o.AddPolicy(policyName, GetHttpContextPartition);
-            });
-            return services;
+            return services.AddRateLimiter(o => o.AddPolicy(policyName, GetRateLimitPartition));
         }
 
         /// <summary>
@@ -47,32 +43,44 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="httpContext">HTTP上下文</param>
         /// <returns>单元分区键</returns>
-        private static RateLimitPartition<UnitPartitionKey> GetHttpContextPartition(HttpContext httpContext)
+        private static RateLimitPartition<UnitPartitionKey> GetRateLimitPartition(HttpContext httpContext)
         {
             var endpoint = httpContext.GetEndpoint();
             if (endpoint == null)
             {
-                return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
+                return NoLimiter();
             }
 
-            var policyMetadata = endpoint.Metadata.GetMetadata<IRateLimiterMetadata>();
-            if (policyMetadata == null)
+            var limiterMetadata = endpoint.Metadata.GetMetadata<IRateLimiterMetadata>();
+            if (limiterMetadata == null)
             {
-                return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
+                return NoLimiter();
             }
 
             var unitFeature = httpContext.Features.Get<IRateLimiterUnitFeature>();
             if (unitFeature == null)
             {
-                return policyMetadata.GetPartition(new UnitPartitionKey(endpoint, string.Empty));
+                return UnitLimiter(string.Empty);
             }
 
             if (unitFeature.Unit == null)
             {
+                return NoLimiter();
+            }
+
+            return UnitLimiter(unitFeature.Unit);
+
+
+            static RateLimitPartition<UnitPartitionKey> NoLimiter()
+            {
                 return RateLimitPartition.GetNoLimiter(UnitPartitionKey.None);
             }
 
-            return policyMetadata.GetPartition(new UnitPartitionKey(endpoint, unitFeature.Unit));
+            RateLimitPartition<UnitPartitionKey> UnitLimiter(string unit)
+            {
+                var partitionKey = new UnitPartitionKey(endpoint, unit);
+                return limiterMetadata.GetPartition(partitionKey);
+            }
         }
     }
 }
